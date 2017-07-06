@@ -37,7 +37,7 @@ function generateNewsArticleCards(data) {
     $(".newsArticleItem, .resetNewsSource, footer").show();
     $.each(data.articles, function(key, val) {       	 
         $(".container").append("<section class='newsArticleItem'><div class='card'><h2>" + val.author + 
-        "</h2><h1>" + val.title + "</h1><hr><img src='" + val.urlToImage + "'/>" +
+        "</h2><h1>" + val.title + "</h1><hr><h2>" + new Date(val.publishedAt) + "</h2><img src='" + val.urlToImage + "'/>" +
         "<p>" + val.description + 
         "</p><a class='btn' href='" + val.url + "'>Read More</a><div class='space'></div></div></section>");
     });
