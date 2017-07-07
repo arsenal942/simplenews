@@ -1,11 +1,30 @@
 var newsSourceSelection = localStorage.getItem("newsSource");
 var newsArticleUrl = "https://newsapi.org/v1/articles?source=" + newsSourceSelection + "&apiKey=c1904a9dbf22437eb11e1abcb13c1807";
 var sourcesUrl = "https://newsapi.org/v1/sources";
+var newsSourceId;
+var availableSources = [];
+
 
 $(document).ready(function() {
     hideHtmlElements();
     checkLocalStorage();
+    $("#searchTerm").autocomplete({
+        source: availableSources,
+        focus: searchTermFocus,
+        select: selectedNewsSource
+    });
 });
+
+function searchTermFocus(event, ui) {
+    $("#searchTerm").val(ui.item.label);
+}
+
+function selectedNewsSource(event, ui) {
+    var searchTerm = ui.item.value;
+    $("section").hide().filter(":contains('" + searchTerm + "')").find('section').andSelf().show();
+    $(".searchForNewsSource").show();
+    console.log(ui.item.value);
+}
 
 function checkLocalStorage() {
     if (newsSourceSelection) {
@@ -16,9 +35,9 @@ function checkLocalStorage() {
 }
 
 function setNewsSourceSelection(data) {
-    var id = data.id;
-    localStorage.setItem("newsSource", id);
-    ajaxGetRequest("https://newsapi.org/v1/articles?source=" + id + "&apiKey=c1904a9dbf22437eb11e1abcb13c1807", generateNewsArticleCards);
+    newsSourceId = data.id;
+    localStorage.setItem("newsSource", newsSourceId);
+    ajaxGetRequest("https://newsapi.org/v1/articles?source=" + newsSourceId + "&apiKey=c1904a9dbf22437eb11e1abcb13c1807", generateNewsArticleCards);
 }
 
 function ajaxGetRequest(url, successFunction) {
@@ -44,14 +63,15 @@ function generateNewsArticleCards(data) {
 }
 
 function generateSourceSelectionCards(data) {
-        hideLoader();
-        $(".newsArticleItem, .resetNewsSource").hide();
-        $(".newsSourceItem, .searchForNewsSource, footer").show();
-    $.each(data.sources, function(key, val) {       	 
+    hideLoader();
+    $(".newsArticleItem, .resetNewsSource").hide();
+    $(".newsSourceItem, .searchForNewsSource, footer").show();
+    $.each(data.sources, function(key, val) {           
         $(".container").append("<section id='" + val.name + "' class='newsSourceItem'><div class='card'><h2>" + val.category + ", " + val.language + 
         "</h2><h1>" + val.name + "</h1><hr>" +
         "<p>" + val.description + 
         "</p><a href='#' onclick='setNewsSourceSelection(this);' id='" + val.id + "' class='btn''>Subscribe</a><div class='space'></div></div></section>");
+        availableSources.push(val.name);
     });
 }
 
@@ -81,5 +101,5 @@ function addElements() {
 
 function resetNewsSource() {
     localStorage.removeItem("newsSource");
-    ajaxGetRequest(sourcesUrl, generateSourceSelectionCards);
+    window.location.reload();
 }

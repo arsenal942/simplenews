@@ -43,7 +43,6 @@ h1 {
   font-size: 2rem;
   color: #303336;
   letter-spacing: 1px;
-  margin: 2vh 4vw;
   font-family: "Playfair Display", serif;
 }
 
@@ -66,13 +65,14 @@ hr {
 }
 
 p {
-  margin: 2vh 8vw;
+  margin: 10px auto 10px auto;
+  width: 80%;
   text-align: center;
   padding-bottom: 1vh;
-  color: #A0A6AB;
+  color: #3E3E3E;
   font-family: "Playfair Display", serif;
   font-weight: 400;
-  font-size: .9rem;
+  font-size: 1rem;
   line-height: 1.25rem;
 }
 
