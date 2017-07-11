@@ -8,12 +8,39 @@ var availableSources = [];
 $(document).ready(function() {
     hideHtmlElements();
     checkLocalStorage();
+    navigationMenu();
     $("#searchTerm").autocomplete({
         source: availableSources,
         focus: searchTermFocus,
         select: selectedNewsSource
     });
 });
+
+function navigationMenu() {
+    $('html').click(function() {
+        $('.nav-menu').removeClass("active");
+    });
+
+    $('.nav-menu ul li').each(function() {
+        var delay = $(this).index() * 50 + 'ms';
+
+        $(this).css({
+            '-webkit-transition-delay': delay,
+            '-moz-transition-delay': delay,
+            '-o-transition-delay': delay,
+            'transition-delay': delay
+        });                  
+    });
+
+    $(".drop").click (function(e) {
+        e.stopPropagation();
+        $('.nav-menu').toggleClass("active");
+    });
+
+    $('.nav-menu').click (function(e) {
+        e.stopPropagation();
+    });
+}
 
 function searchTermFocus(event, ui) {
     $("#searchTerm").val(ui.item.label);
@@ -23,7 +50,6 @@ function selectedNewsSource(event, ui) {
     var searchTerm = ui.item.value;
     $("section").hide().filter(":contains('" + searchTerm + "')").find('section').andSelf().show();
     $(".searchForNewsSource").show();
-    console.log(ui.item.value);
 }
 
 function checkLocalStorage() {
@@ -55,7 +81,8 @@ function generateNewsArticleCards(data) {
     $(".newsSourceItem").hide();
     $(".newsArticleItem, .resetNewsSource, footer").show();
     $.each(data.articles, function(key, val) {       	 
-        $(".container").append("<section class='newsArticleItem'><div class='card'><h2>" + val.author + 
+        var author = val.author ? val.author : '';
+        $(".container").append("<section class='newsArticleItem'><div class='card'><h2>" + author + 
         "</h2><h1>" + val.title + "</h1><hr><h2>" + new Date(val.publishedAt) + "</h2><img src='" + val.urlToImage + "'/>" +
         "<p>" + val.description + 
         "</p><a class='btn' href='" + val.url + "'>Read More</a><div class='space'></div></div></section>");
@@ -84,6 +111,7 @@ function displayErrorMessage(xhr) {
 
 function hideLoader() {
     $("body").removeClass("loader");
+    $("nav").show();
 }
 
 function hideHtmlElements() {
@@ -91,15 +119,17 @@ function hideHtmlElements() {
 }
 
 function loadingCards() {
-    $(".newsSourceItem, .newsArticleItem, .searchForNewsSource, .resetNewsSource, footer").hide();
+    $(".newsSourceItem, .newsArticleItem, .searchForNewsSource, .resetNewsSource, footer, nav").hide();
     $("body").addClass("loader");
-}
-
-function addElements() {
-    $(".searchForNewsSource, footer").add();
 }
 
 function resetNewsSource() {
     localStorage.removeItem("newsSource");
     window.location.reload();
+}
+
+function clearNewsSourceSelection() {
+    $("section").show();
+    $("#searchTerm").val("").focus();
+    $(".resetNewsSource").hide();
 }

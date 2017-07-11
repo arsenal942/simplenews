@@ -22,6 +22,19 @@
 
 <body>
   <div class="container">
+    <nav>
+      <h1>Simple News</h1>
+      <a href="#" class="drop">
+        <svg class="icon" enable-background="new 0 0 24 24" id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="19" r="2"></circle>
+        </svg>
+      </a>
+      <div class="nav-menu">
+        <ul>
+          <li>About</li>
+        </ul>
+      </div>
+    </nav>
+
     <section class="resetNewsSource">
       <a class="btn" onclick="resetNewsSource();">Reset Source</a>
     </section>
@@ -31,6 +44,7 @@
         <div class="search">
             <input type="text" id="searchTerm" class="searchTerm" placeholder="Search News Sources">
         </div>
+        <a href="#" class="btn" onclick="clearNewsSourceSelection()" />Clear</a>
     </section>
   </div>
   <footer>
