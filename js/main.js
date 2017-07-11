@@ -55,8 +55,9 @@ function generateNewsArticleCards(data) {
     $(".newsArticleItem, .resetNewsSource, footer").show();
     $.each(data.articles, function(key, val) {       
         var author = val.author ? val.author : ''; 
+        var articleImage = val.urlToImage ? "<img src='" + val.urlToImage + "'/>" : '';  
         $(".container").append("<section class='newsArticleItem'><div class='card'><h2>" + author + 
-        "</h2><h1>" + val.title + "</h1><hr><h2>" + new Date(val.publishedAt) + "</h2><img src='" + val.urlToImage + "'/>" +
+        "</h2><h1>" + val.title + "</h1><hr><h2>" + new Date(val.publishedAt) + "</h2>" + articleImage +
         "<p>" + val.description + 
         "</p><a class='btn' href='" + val.url + "'>Read More</a><div class='line'></div></div></section>");
     });
@@ -66,7 +67,7 @@ function generateSourceSelectionCards(data) {
     hideLoader();
     $(".newsArticleItem, .resetNewsSource").hide();
     $(".searchForNewsSource, footer").show();
-    $.each(data.sources, function(key, val) {           
+    $.each(data.sources, function(key, val) {         
         $(".container").append("<section id='" + val.name + "' class='newsSourceItem'><div class='card'><h2>" + val.category + ", " + val.language + 
         "</h2><h1>" + val.name + "</h1><hr>" +
         "<p>" + val.description + 
