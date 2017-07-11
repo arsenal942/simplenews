@@ -8,39 +8,12 @@ var availableSources = [];
 $(document).ready(function() {
     hideHtmlElements();
     checkLocalStorage();
-    navigationMenu();
     $("#searchTerm").autocomplete({
         source: availableSources,
         focus: searchTermFocus,
         select: selectedNewsSource
     });
 });
-
-function navigationMenu() {
-    $('html').click(function() {
-        $('.nav-menu').removeClass("active");
-    });
-
-    $('.nav-menu ul li').each(function() {
-        var delay = $(this).index() * 50 + 'ms';
-
-        $(this).css({
-            '-webkit-transition-delay': delay,
-            '-moz-transition-delay': delay,
-            '-o-transition-delay': delay,
-            'transition-delay': delay
-        });                  
-    });
-
-    $(".drop").click (function(e) {
-        e.stopPropagation();
-        $('.nav-menu').toggleClass("active");
-    });
-
-    $('.nav-menu').click (function(e) {
-        e.stopPropagation();
-    });
-}
 
 function searchTermFocus(event, ui) {
     $("#searchTerm").val(ui.item.label);
@@ -80,26 +53,27 @@ function generateNewsArticleCards(data) {
     hideLoader();    
     $(".newsSourceItem").hide();
     $(".newsArticleItem, .resetNewsSource, footer").show();
-    $.each(data.articles, function(key, val) {       	 
-        var author = val.author ? val.author : '';
+    $.each(data.articles, function(key, val) {       
+        var author = val.author ? val.author : ''; 
         $(".container").append("<section class='newsArticleItem'><div class='card'><h2>" + author + 
         "</h2><h1>" + val.title + "</h1><hr><h2>" + new Date(val.publishedAt) + "</h2><img src='" + val.urlToImage + "'/>" +
         "<p>" + val.description + 
-        "</p><a class='btn' href='" + val.url + "'>Read More</a><div class='space'></div></div></section>");
+        "</p><a class='btn' href='" + val.url + "'>Read More</a><div class='line'></div></div></section>");
     });
 }
 
 function generateSourceSelectionCards(data) {
     hideLoader();
     $(".newsArticleItem, .resetNewsSource").hide();
-    $(".newsSourceItem, .searchForNewsSource, footer").show();
+    $(".searchForNewsSource, footer").show();
     $.each(data.sources, function(key, val) {           
         $(".container").append("<section id='" + val.name + "' class='newsSourceItem'><div class='card'><h2>" + val.category + ", " + val.language + 
         "</h2><h1>" + val.name + "</h1><hr>" +
         "<p>" + val.description + 
-        "</p><a href='#' onclick='setNewsSourceSelection(this);' id='" + val.id + "' class='btn''>Subscribe</a><div class='space'></div></div></section>");
+        "</p><a href='#' onclick='setNewsSourceSelection(this);' id='" + val.id + "' class='btn''>Subscribe</a><div class='line'></div></div></section>");
         availableSources.push(val.name);
     });
+    $(".newsSourceItem").hide();
 }
 
 function displayErrorMessage(xhr) {
@@ -131,5 +105,5 @@ function resetNewsSource() {
 function clearNewsSourceSelection() {
     $("section").show();
     $("#searchTerm").val("").focus();
-    $(".resetNewsSource").hide();
+    $(".resetNewsSource, .newsSourceItem").hide();
 }
