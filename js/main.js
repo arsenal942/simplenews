@@ -3,6 +3,7 @@ var newsArticleUrl = "https://newsapi.org/v1/articles?source=" + newsSourceSelec
 var sourcesUrl = "https://newsapi.org/v1/sources";
 var newsSourceId;
 var availableSources = [];
+var apiKey = "599158f429844f128e0f192dc09c76a1";
 
 
 $(document).ready(function() {
