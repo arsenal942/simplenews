@@ -1,5 +1,5 @@
 var newsSourceSelection = localStorage.getItem("newsSource");
-var newsArticleUrl = "https://newsapi.org/v1/articles?source=" + newsSourceSelection + "&apiKey=c1904a9dbf22437eb11e1abcb13c1807";
+var newsArticleUrl = "https://newsapi.org/v1/articles?source=" + newsSourceSelection + "&apiKey=" + apiKey;
 var sourcesUrl = "https://newsapi.org/v1/sources";
 var newsSourceId;
 var availableSources = [];
@@ -36,7 +36,7 @@ function checkLocalStorage() {
 function setNewsSourceSelection(data) {
     newsSourceId = data.id;
     localStorage.setItem("newsSource", newsSourceId);
-    ajaxGetRequest("https://newsapi.org/v1/articles?source=" + newsSourceId + "&apiKey=c1904a9dbf22437eb11e1abcb13c1807", generateNewsArticleCards);
+    ajaxGetRequest("https://newsapi.org/v1/articles?source=" + newsSourceId + "&apiKey=" + apiKey, generateNewsArticleCards);
 }
 
 function ajaxGetRequest(url, successFunction) {
@@ -59,7 +59,7 @@ function generateNewsArticleCards(data) {
         $(".container").append("<section class='newsArticleItem'><div class='card'><h2>" + author + 
         "</h2><h1>" + val.title + "</h1><hr><h2>" + new Date(val.publishedAt) + "</h2>" + articleImage +
         "<p>" + val.description + 
-        "</p><a class='btn' href='" + val.url + "'>Read More</a><div class='line'></div></div></section>");
+        "</p><a class='btn' target='_blank' href='" + val.url + "'>Read More</a><div class='line'></div></div></section>");
     });
 }
 

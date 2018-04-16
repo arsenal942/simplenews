@@ -1,0 +1,2 @@
+# Simple News
+ Simple News is a news aggregator that lets you browse multiple news sources. It has been built on no frameworks and just some good old fashioned jQuery and DOM injection. It uses http://newsapi.org for the aggregation. 

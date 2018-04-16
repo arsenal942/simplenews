@@ -1,10 +1,11 @@
 <html>
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/jquery-ui.min.css">
-  <title>Simple News</title>
+  <meta name="description" content="Simple News is a news aggregator that lets you browse multiple news sources.">
+  <meta name="keywords" content="simple news, news, aggregator">
+  <meta name="author" content="Nicholas Clancy">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:locale" content="en_AU">
   <meta property="og:title" content="Simple News">
   <meta property="og:image" content="icon.png">
@@ -12,12 +13,16 @@
   <meta name="twitter:site" content="@simplenews">
   <meta name="twitter:title" content="Simple News">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="icon.png">  
-
+  <meta name="twitter:image" content="icon.png">
+  <title>Simple News</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="js/jquery-ui.min.js"></script>
+  <script src="js/apiKey.js"></script>
   <script src="js/main.js"></script>
 </head>
+
 <body>
   <div class="container">
     <section class="resetNewsSource">
@@ -25,14 +30,15 @@
     </section>
     <section class="searchForNewsSource">
       <h2>No News Source Selected</h2>
-        <div class="search">
-            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search News Sources">
-        </div>
-        <a href="#" class="btn" onclick="clearNewsSourceSelection()" />Clear</a>
+      <div class="search">
+        <input type="text" id="searchTerm" class="searchTerm" placeholder="Search News Sources">
+      </div>
+      <a href="#" class="btn" onclick="clearNewsSourceSelection()" />Clear</a>
     </section>
   </div>
   <footer>
     <h2>&copy 2017 - Made by Nicholas Clancy</h2>
   </footer>
 </body>
+
 </html>
