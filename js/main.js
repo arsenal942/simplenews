@@ -9,22 +9,26 @@ var apiKey = "599158f429844f128e0f192dc09c76a1";
 $(document).ready(function() {
     hideHtmlElements();
     checkLocalStorage();
+    setupAutocomplete();
+});
+
+function setupAutocomplete(){
     $("#searchTerm").autocomplete({
         source: availableSources,
         focus: searchTermFocus,
         select: selectedNewsSource
     });
-});
+};
 
 function searchTermFocus(event, ui) {
     $("#searchTerm").val(ui.item.label);
-}
+};
 
 function selectedNewsSource(event, ui) {
     var searchTerm = ui.item.value;
     $("section").hide().filter(":contains('" + searchTerm + "')").find('section').andSelf().show();
     $(".searchForNewsSource").show();
-}
+};
 
 function checkLocalStorage() {
     if (newsSourceSelection) {
@@ -32,13 +36,13 @@ function checkLocalStorage() {
     } else {
         ajaxGetRequest(sourcesUrl, generateSourceSelectionCards);
     }
-}
+};
 
 function setNewsSourceSelection(data) {
     newsSourceId = data.id;
     localStorage.setItem("newsSource", newsSourceId);
     ajaxGetRequest("https://newsapi.org/v1/articles?source=" + newsSourceId + "&apiKey=" + apiKey, generateNewsArticleCards);
-}
+};
 
 function ajaxGetRequest(url, successFunction) {
     loadingCards();
@@ -48,7 +52,7 @@ function ajaxGetRequest(url, successFunction) {
         success: successFunction,
         error: displayErrorMessage
     });
-}
+};
 
 function generateNewsArticleCards(data) {
     hideLoader();    
@@ -62,7 +66,7 @@ function generateNewsArticleCards(data) {
         "<p>" + val.description + 
         "</p><a class='btn' target='_blank' href='" + val.url + "'>Read More</a><div class='line'></div></div></section>");
     });
-}
+};
 
 function generateSourceSelectionCards(data) {
     hideLoader();
@@ -76,36 +80,36 @@ function generateSourceSelectionCards(data) {
         availableSources.push(val.name);
     });
     $(".newsSourceItem").hide();
-}
+};
 
 function displayErrorMessage(xhr) {
     $("loader", "newsSourceItem", "newsArticleItem").hide();
-    $(".container").append("<h2>Error: " + xhr.statusText + "</h2>").css("text-align", "center");
-}
+    $(".container").append("<h2>Error Page is refreshing... " + xhr.statusText + "</h2>").css("text-align", "center");
+    hideLoader();
+    clearNewsSourceSelection();    
+    setTimeout(window.location.reload(), 3000);
+};
 
 /* HTML ELEMENT UTILITIES*/
 
 function hideLoader() {
     $("body").removeClass("loader");
     $("nav").show();
-}
+};
 
 function hideHtmlElements() {
     $(".searchForNewsSource, footer").hide();
-}
+};
 
 function loadingCards() {
     $(".newsSourceItem, .newsArticleItem, .searchForNewsSource, .resetNewsSource, footer, nav").hide();
     $("body").addClass("loader");
-}
-
-function resetNewsSource() {
-    localStorage.removeItem("newsSource");
-    window.location.reload();
-}
+};
 
 function clearNewsSourceSelection() {
+    localStorage.removeItem("newsSource");
     $("section").show();
     $("#searchTerm").val("").focus();
     $(".resetNewsSource, .newsSourceItem").hide();
-}
+    $(".newsArticleItem").remove();
+};

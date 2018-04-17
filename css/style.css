@@ -132,7 +132,7 @@ a.btn:hover {
 
 footer {
   text-align: center;
-  padding-bottom: 10px;
+  padding-top: 50px;
 }
 
 .searchTerm {
@@ -143,10 +143,15 @@ footer {
   color: #9DBFAF;
   padding: 10px;
   margin-bottom: 10px;
-  width: 60vh;
+  width: 50%;
 }
 
 .searchTerm:focus{
   border: 1px solid #7C66FF;
   color: #7C66FF;
+}
+
+footer a, footer a:visited {
+  color: inherit;
+  text-decoration: none;
 }
